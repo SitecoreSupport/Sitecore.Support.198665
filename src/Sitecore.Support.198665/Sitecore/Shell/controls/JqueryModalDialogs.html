@@ -335,20 +335,30 @@
           dialogRecord.request.dialogResult = result == null ? undefined : result;
           dialogRecord.request.resume();
         }
+		
+		//sitecore.support.198665
+		var checkIfBrowserIE = false || !!document.documentMode;
 
-        if (activeFrame) {
-          if (!activeFrame.focus() && activeFrame.contentWindow) {
-            activeFrame.contentWindow.focus();
+		if (!checkIfBrowserIE)
+		  {
+          if (activeFrame) {
+            if (!activeFrame.focus() && activeFrame.contentWindow) {
+              activeFrame.contentWindow.focus();
+            }
           }
-        }
-
+		}
+		
+		top.document.body.style.overflow = 'auto';
+		//end of sitecore.support.198665
+		
         if (dialogRecord.dialogClosedCallback) {
           dialogRecord.dialogClosedCallback(result);
         }
-
+		
         if (top._scDialogs.length == 0) {
           var dataOverflow = top.document.body.getAttribute('data-overflow');
           top.document.body.style.overflow = dataOverflow == 'empty' ? '' : dataOverflow;
+
         }
       } else {
         top._close();
