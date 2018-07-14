@@ -349,11 +349,16 @@
           dialogRecord.request.resume();
         }
 
-        if (activeFrame) {
-          if (!activeFrame.focus() && activeFrame.contentWindow) {
-            activeFrame.contentWindow.focus();
+        var checkIfBrowserIsIE = false || !!document.documentMode;//sitecore.support.198665
+        if (!checkIfBrowserIsIE) {//sitecore.support.198665
+          if (activeFrame) {
+            if (!activeFrame.focus() && activeFrame.contentWindow) {
+              activeFrame.contentWindow.focus();
+            }
           }
-        }
+        }//sitecore.support.198665
+
+        top.document.body.style.overflow = 'auto';//sitecore.support.198665
 
         if (dialogRecord.dialogClosedCallback) {
           dialogRecord.dialogClosedCallback(result);
